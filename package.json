@@ -7,7 +7,9 @@
     "start": "nodemon ./src/index.js",
     "lint": "eslint ./src/ ./public/",
     "mocha": "mocha ./test --recursive",
-    "test": "npm run lint && npm run mocha"
+    "test": "npm run lint && npm run mocha",
+    "db-start": "mongod --dbpath ./data --syslog --fork",
+    "db-stop": "kill -9 mongod"
   },
   "repository": {
     "type": "git",
@@ -29,7 +31,7 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "bitcoinjs-lib": "^2.3.0",
+    "blockcypher": "^0.2.0",
     "deepstream.io-client-js": "^2.1.1",
     "express": "^4.14.0",
     "morgan": "^1.7.0"
