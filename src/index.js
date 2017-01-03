@@ -14,3 +14,4 @@ app.listen(3000, () => {
 // Remove after testing <--
 
 events.generateWalletListener();
+events.transferWalletListener();

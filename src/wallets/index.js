@@ -20,42 +20,65 @@ exports.generateWalletListener = () => {
     // create listener for webhook
   };
 
-  connection.event.subscribe('wallets', (data) => {
-    // get address from API
+  connection.event.subscribe('wallet-create', (data) => {
+    const createWalletCB = (err, walletInfo) => {
+      if (err) {
+        // think about how to effectively handle errors... retry or give up and tell the client?
+        console.log(err);
+      } else {
+        walletRecordCreator(data.userID, data.action.split('-')[2], walletInfo);
+      }
+    };
+
     if (data.action === 'generate-wallet-BTC') {
-      btcapi.genAddr(null, (err, walletInfo) => {
-        if (err) {
-          console.log(err);
-          // think about how to effectively handle errors... retry or give up and tell the client?
-        } else {
-          const type = data.action.split('-')[2];
-          walletRecordCreator(data.userID, type, walletInfo);
-        }
-      });
+      btcapi.genAddr(null, createWalletCB);
     }
     if (data.action === 'generate-wallet-LTC') {
-      ltcapi.genAddr(null, (err, walletInfo) => {
-        if (err) {
-          console.log(err);
-          // think about how to effectively handle errors... retry or give up and tell the client?
-        } else {
-          // generate record
-          const type = data.action.split('-')[2];
-          walletRecordCreator(data.userID, type, walletInfo);
-        }
-      });
+      ltcapi.genAddr(null, createWalletCB);
     }
     if (data.action === 'generate-wallet-DOGE') {
-      dogeapi.genAddr(null, (err, walletInfo) => {
-        if (err) {
-          console.log(err);
-          // think about how to effectively handle errors... retry or give up and tell the client?
-        } else {
-          // generate record
-          const type = data.action.split('-')[2];
-          walletRecordCreator(data.userID, type, walletInfo);
-        }
-      });
+      dogeapi.genAddr(null, createWalletCB);
     }
   });
 };
+
+exports.transferWalletListener = () => {
+  // const transferWalletCB = (err, response) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     walletRecordCreator(data.userID, data.action.split('-')[2], walletInfo);
+  //   }
+  // };
+
+  connection.event.subscribe('wallet-transfer', (data) => {
+    // Setup balance return listener
+    connection.event.subscribe('returnBalance', (returnData) => {
+      if (data.userID === returnData.userID && // These should be handled with permissions.
+          data.currency === returnData.currency &&
+          returnData.currency > data.amount) {
+        // [Todo]: Initiate transfer
+        if (data.currency === 'BTC') {
+          if(returnData.amount >= data.amount) {
+            btcapi.newTX();
+          } else {
+            // Throw error to user...
+          }
+          
+        }
+        if (data.currency === 'LTC') {
+
+        }
+        if (data.currency === 'DOGE') {
+          
+        }
+        // Unsubscribe from the balance check
+        connection.event.unsubscribe('returnBalance');
+      }
+    });
+    connection.event.emit('checkBalance', { userID: data.userID, currency: data.type });
+    // 
+    // btcapi.genAddr(null, transferWalletCB);
+
+  });
+}

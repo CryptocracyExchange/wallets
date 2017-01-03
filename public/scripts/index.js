@@ -1,4 +1,4 @@
-class App extends React.Component{ // eslint-disable-line
+class Addresses extends React.Component{ // eslint-disable-line
   constructor(props){
     super(props);
     this.state = {
@@ -33,7 +33,7 @@ class App extends React.Component{ // eslint-disable-line
   }
 
   handleGenerateWalletClick(type) {
-    this.client.event.emit('wallets', { userID: 'userID', action: `generate-wallet-${type}` });
+    this.client.event.emit('wallet-create', { userID: 'userID', currency: type });
   }
 
   render() {
@@ -46,9 +46,30 @@ class App extends React.Component{ // eslint-disable-line
       React.createElement('div', null, `DOGE Address: ${this.state.DOGEAddress}`) // eslint-disable-line
     );
   }
-};
+}
+
+class Transfers extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  handleTransferClick(currency, amount) {
+    this.client.event.emit('wallet-transfer', { type: type, amount: amount});
+  }
+  render() {
+    return React.createElement('div', null,
+           React.createElement('input', { placeholder: 'Enter your address' }, null), // send it a place-holder
+           React.createElement('input', { placeholder: 'Enter your amount' }, null), // send it a place-holder
+           React.createElement('button', { onClick: () => this.handleGenerateWalletClick('BTC') }, 'Submit Transfer'));
+  }
+}
+
+const App = () => (
+  React.createElement('div', { userID: 'userID' },
+  React.createElement(Addresses, { userID: 'userID' }, null),
+  React.createElement(Transfers, { userID: 'userID' }, null))
+);
 
 ReactDOM.render(
   React.createElement(App, { userID: 'userID' }, null),
-  document.getElementById('app')
+  document.getElementById('app') // eslint-disable-line
 );
