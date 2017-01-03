@@ -38,6 +38,7 @@ class Addresses extends React.Component{ // eslint-disable-line
 
   render() {
     return React.createElement('div', null,
+      React.createElement('h3', null, 'Generate Wallets'),
       React.createElement('button', { onClick: () => this.handleGenerateWalletClick('BTC') }, 'Generate BTC Address'),
       React.createElement('button', { onClick: () => this.handleGenerateWalletClick('LTC') }, 'Generate LTC Address'),
       React.createElement('button', { onClick: () => this.handleGenerateWalletClick('DOGE') }, 'Generate DOGE Address'),
@@ -53,10 +54,11 @@ class Transfers extends React.Component {
     super(props);
   }
   handleTransferClick(currency, amount) {
-    this.client.event.emit('wallet-transfer', { type: type, amount: amount});
+    this.client.event.emit('wallet-transfer-out', { type: type, amount: amount});
   }
   render() {
     return React.createElement('div', null,
+           React.createElement('h3', null, 'Transfer Out'),
            React.createElement('input', { placeholder: 'Enter your address' }, null), // send it a place-holder
            React.createElement('input', { placeholder: 'Enter your amount' }, null), // send it a place-holder
            React.createElement('button', { onClick: () => this.handleGenerateWalletClick('BTC') }, 'Submit Transfer'));
@@ -65,6 +67,7 @@ class Transfers extends React.Component {
 
 const App = () => (
   React.createElement('div', { userID: 'userID' },
+  React.createElement('h1', null, 'Cryptocracy - Wallets'),
   React.createElement(Addresses, { userID: 'userID' }, null),
   React.createElement(Transfers, { userID: 'userID' }, null))
 );
