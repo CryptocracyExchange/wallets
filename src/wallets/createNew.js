@@ -3,22 +3,29 @@ const api = require('./api');
 
 module.exports = () => {
   const walletRecordCreator = (userID, type, walletData) => {
-    const wallet = connection.record.getRecord(`wallets/${userID}/${type}`);
-    wallet.set('userID', userID);
-    wallet.set('currency', type);
-    wallet.set('privateKey', walletData.private);
-    wallet.set('publicKey', walletData.public);
-    wallet.set('address', walletData.address);
-    wallet.set('wif', walletData.wif);
-    // if (type === 'BTC') {
-    //   api.btcapi.createHook(); // Takes data and callback parameters.
-    // }
-    // if (type === 'LTC') {
-    //   api.ltcapi.createHook(); // Takes data and callback parameters.
-    // }
-    // if (type === 'DOGE') {
-    //   api.dogeapi.createHook(); // Takes data and callback parameters.
-    // }
+    const wallet = connection.record.getRecord(`wallets/${userID}`);
+    // wallet.set({ userID });
+    if (type === 'BTC') {
+      wallet.set('BTC.privateKey', walletData.private);
+      wallet.set('BTC.publicKey', walletData.public);
+      wallet.set('BTC.address', walletData.address);
+      wallet.set('BTC.wif', walletData.wif);
+      // api.btcapi.createHook(); // Takes data and callback parameters.
+    }
+    if (type === 'LTC') {
+      wallet.set('LTC.privateKey', walletData.private);
+      wallet.set('LTC.publicKey', walletData.public);
+      wallet.set('LTC.address', walletData.address);
+      wallet.set('LTC.wif', walletData.wif);
+      // api.ltcapi.createHook(); // Takes data and callback parameters.
+    }
+    if (type === 'DOGE') {
+      wallet.set('DOGE.privateKey', walletData.private);
+      wallet.set('DOGE.publicKey', walletData.public);
+      wallet.set('DOGE.address', walletData.address);
+      wallet.set('DOGE.wif', walletData.wif);
+      // api.dogeapi.createHook(); // Takes data and callback parameters.
+    }
     // connection.event.subscribe('confirmed-transfer', (data) => {
     //   connection.event.emit('updateBalance', { userID: userID, currency: type, amount: data });
     // });

@@ -6,30 +6,26 @@ class Addresses extends React.Component{ // eslint-disable-line
       BTCAddress: '',
       LTCAddress: '',
       DOGEAddress: ''
-    }
+    };
 
     this.client = deepstream('localhost:6020').login();
-    this.btcWallet = this.client.record.getRecord(`wallets/${props.userID}/BTC`);
-    this.ltcWallet = this.client.record.getRecord(`wallets/${props.userID}/LTC`);
-    this.dogeWallet = this.client.record.getRecord(`wallets/${props.userID}/DOGE`);
+    this.userWallet = this.client.record.getRecord(`wallets/${props.userID}`);
   }
 
   componentWillMount() {
-    this.btcWallet.subscribe('address', (address) => {
+    this.userWallet.subscribe('BTC.address', (address) => {
       this.setState({ BTCAddress: address });
     });
-    this.ltcWallet.subscribe('address', (address) => {
+    this.userWallet.subscribe('LTC.address', (address) => {
       this.setState({ LTCAddress: address });
     });
-    this.dogeWallet.subscribe('address', (address) => {
+    this.userWallet.subscribe('DOGE.address', (address) => {
       this.setState({ DOGEAddress: address });
     });
   }
 
   componentWillUnmount() {
-    this.btcWallet.unsubscribe();
-    this.ltcWallet.unsubscribe();
-    this.dogeWallet.unsubscribe();
+    this.userWallet.unsubscribe();
   }
 
   handleGenerateWalletClick(type) {

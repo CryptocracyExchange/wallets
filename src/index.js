@@ -14,7 +14,7 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 // to the end of this url for better security.
 app.post('/apihooks', (req, res) => {
   // Test to find out what req.body has included with it...
-  connection.events.emit('confirmed-transfer', {});
+  // connection.events.emit('confirmed-transfer', {});
   res.send(200);
 });
 
