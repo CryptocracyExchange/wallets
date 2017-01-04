@@ -1,38 +1,37 @@
 const config = require('./config/');
 
-const deleteAllBTCHooks = () => {
-  config.btcapi.listHooks((err, data) => {
-    if (err) { console.log(err); }
-    data.forEach((hook) => {
-      config.btcapi.delHook(hook.id, (err, body) => {
-        if (err) { console.log(err); }
-      });
-    });
-  });
-};
+// const deleteAllBTCHooks = () => {
+//   config.btcapi.listHooks((err, data) => {
+//     if (err) { console.log(err); }
+//     data.forEach((hook) => {
+//       config.btcapi.delHook(hook.id, (hookErr) => {
+//         if (err) { console.log(hookErr); }
+//       });
+//     });
+//   });
+// };
 
-const deleteAllLTCHooks = () => {
-  config.ltcapi.listHooks((err, data) => {
-    if (err) { console.log(err); }
-    data.forEach((hook) => {
-      config.ltcapi.delHook(hook.id, (err, body) => {
-        if (err) { console.log(err); }
-      });
-    });
-  });
-};
+// const deleteAllLTCHooks = () => {
+//   config.ltcapi.listHooks((err, data) => {
+//     if (err) { console.log(err); }
+//     data.forEach((hook) => {
+//       config.ltcapi.delHook(hook.id, (hookErr) => {
+//         if (err) { console.log(hookErr); }
+//       });
+//     });
+//   });
+// };
 
-const deleteAllDOGEHooks = () => {
-  config.dogeapi.listHooks((err, data) => {
-    if (err) { console.log(err); }
-    data.forEach((hook) => {
-      config.dogeapi.delHook(hook.id, (err, body) => {
-        if (err) { console.log(err); }
-      });
-    });
-  });
-};
-
+// const deleteAllDOGEHooks = () => {
+//   config.dogeapi.listHooks((err, data) => {
+//     if (err) { console.log(err); }
+//     data.forEach((hook) => {
+//       config.dogeapi.delHook(hook.id, (hookErr) => {
+//         if (err) { console.log(hookErr); }
+//       });
+//     });
+//   });
+// };
 
 module.exports = () => {
   const walletRecordCreator = (userID, type, walletData) => {
@@ -45,7 +44,7 @@ module.exports = () => {
       wallet.set(`${type}.address`, walletData.address);
       wallet.set(`${type}.wif`, walletData.wif);
       wallet.set(`${type}.uniqueID`, urlID);
-      
+
       const webhook = {
         event: 'confirmed-tx',
         address: wallet.get(`${type}.address`),
@@ -58,12 +57,10 @@ module.exports = () => {
         // Create new hook.
         config.btcapi.createHook(webhook, (err, data) => {
           if (err) { console.log(err); }
-          console.log('created new hook');
           // Delete old hook.
           const oldHookID = wallet.get('BTC.hookID');
-          config.btcapi.delHook(oldHookID, (err, data) => {
-            if (err) { console.log(err); }
-            console.log('deleted old hook');
+          config.btcapi.delHook(oldHookID, (hookErr) => {
+            if (err) { console.log(hookErr); }
             // Update new hook ID.
             wallet.set('BTC.hookID', data.id);
           });
@@ -76,8 +73,8 @@ module.exports = () => {
           if (err) { console.log(err); }
           // Delete old hook.
           const oldHookID = wallet.get('LTC.hookID');
-          config.ltcapi.delHook(oldHookID, (err, body) => {
-            if (err) { console.log(err); }
+          config.ltcapi.delHook(oldHookID, (hookErr) => {
+            if (err) { console.log(hookErr); }
             // Update new hook ID.
             wallet.set('LTC.hookID', data.id);
           });
@@ -90,8 +87,8 @@ module.exports = () => {
           if (err) { console.log(err); }
           // Delete old hook.
           const oldHookID = wallet.get('DOGE.hookID');
-          config.dogeapi.delHook(oldHookID, (err, body) => {
-            if (err) { console.log(err); }
+          config.dogeapi.delHook(oldHookID, (hookErr) => {
+            if (err) { console.log(hookErr); }
             // Update new hook ID.
             wallet.set('DOGE.hookID', data.id);
           });

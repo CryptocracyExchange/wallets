@@ -10,7 +10,6 @@ describe('Create new wallets', () => {
   });
 
   it('Should listen for "wallet-create" events', () => {
-    
     const expected = true;
     const actual = true;
     expect(actual).to.equal(expected);
