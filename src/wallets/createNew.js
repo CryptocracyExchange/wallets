@@ -97,7 +97,7 @@ module.exports = () => {
           });
         });
       }
-      // Listen for a single confirmed transaction
+      // Listen for a single confirmed transaction with a unique ID.
       config.connection.once(`confirmed-transfer-${urlID}`, (data) => {
         config.connection.event.emit('updateBalance', { userID, currency: type, update: data });
       });
@@ -107,7 +107,6 @@ module.exports = () => {
   config.connection.event.subscribe('wallet-create', (data) => {
     const createWalletCB = (err, walletInfo) => {
       if (err) {
-        // [TODO]: Properly handle errors... retry or give up and tell the client?
         console.log(err);
       } else {
         walletRecordCreator(data.userID, data.currency, walletInfo);

@@ -12,7 +12,8 @@ app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '../public')));
 
 app.post('/apihooks/*', (req, res) => {
-  config.connection.events.emit('confirmed-transfer', {
+  // Emit event with the unique code.
+  config.connection.events.emit(`confirmed-transfer-${req.path.split(path.split)[1]}`, {
     uniqueID: req.path.split(path.split)[1],
     data: req.body,
   });

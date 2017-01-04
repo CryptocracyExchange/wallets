@@ -5,7 +5,7 @@
   "main": "./src",
   "scripts": {
     "start": "nodemon ./src/index.js",
-    "lint": "eslint ./src/ ./public/",
+    "lint": "eslint ./src/ ./public/scripts/",
     "mocha": "mocha ./test --recursive",
     "test": "npm run lint && npm run mocha",
     "db-start": "mongod --dbpath ./data --syslog --fork",
