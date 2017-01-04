@@ -10,11 +10,12 @@ const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '../public')));
-// [TODO]: Add a random string (uniquely associated with a wallet address)
-// to the end of this url for better security.
-app.post('/apihooks', (req, res) => {
-  // Test to find out what req.body has included with it...
-  // connection.events.emit('confirmed-transfer', {});
+
+app.post('/apihooks/*', (req, res) => {
+  config.connection.events.emit('confirmed-transfer', {
+    uniqueID: req.path.split(path.split)[1],
+    data: req.body,
+  });
   res.send(200);
 });
 

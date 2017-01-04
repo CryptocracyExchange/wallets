@@ -47,9 +47,10 @@ module.exports = () => {
       wallet.set(`${type}.uniqueID`, urlID);
       
       const webhook = {
-        event: 'unconfirmed-tx',
+        event: 'confirmed-tx',
         address: wallet.get(`${type}.address`),
         url: 'http://requestb.in/1a1ci3n1',
+        // ProductionURL:
         // url: `http://${url}/apihooks/${urlID}`
       };
 
@@ -96,10 +97,10 @@ module.exports = () => {
           });
         });
       }
-
-      // config.connection.event.subscribe('confirmed-transfer', (data) => {
-      //   config.connection.event.emit('updateBalance', { userID: userID, currency: type, amount: data });
-      // });
+      // Listen for a single confirmed transaction
+      config.connection.once(`confirmed-transfer-${urlID}`, (data) => {
+        config.connection.event.emit('updateBalance', { userID, currency: type, update: data });
+      });
     });
   };
 
