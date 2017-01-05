@@ -13,8 +13,9 @@ app.use('/', express.static(path.join(__dirname, '../public')));
 
 app.post('/apihooks/*', (req, res) => {
   // Emit event with the unique code.
-  config.connection.events.emit(`confirmed-transfer-${req.path.split(path.split)[1]}`, {
-    uniqueID: req.path.split(path.split)[1],
+  const uniqueID = req.path.split(path.split)[1];
+  config.connection.events.emit(`confirmed-transfer-${uniqueID}`, {
+    uniqueID,
     data: req.body,
   });
   res.send(200);

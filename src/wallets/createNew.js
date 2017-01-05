@@ -97,6 +97,8 @@ module.exports = () => {
       // Listen for a single confirmed transaction with a unique ID.
       config.connection.once(`confirmed-transfer-${urlID}`, (data) => {
         config.connection.event.emit('updateBalance', { userID, currency: type, update: data });
+        // [TODO]: Save transaction to new record set
+        // [TODO]: Transfer to hot wallet
       });
     });
   };

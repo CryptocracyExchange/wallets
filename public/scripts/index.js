@@ -62,6 +62,7 @@ class Transfers extends React.Component { // eslint-disable-line
     this.handleAmountUpdate = this.handleAmountUpdate.bind(this);
     this.handleCurrencyUpdate = this.handleCurrencyUpdate.bind(this);
     this.handleTransferClick = this.handleTransferClick.bind(this);
+    this.client = deepstream('localhost:6020').login(); // eslint-disable-line
   }
 
   handleAddressUpdate(e) {
@@ -80,7 +81,6 @@ class Transfers extends React.Component { // eslint-disable-line
     this.setState({
       currency: e.target.value,
     });
-    console.log(this.state.currency);
   }
 
   handleTransferClick() {
