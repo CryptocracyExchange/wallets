@@ -1,9 +1,9 @@
 const expect = require('chai').expect;
-const deepstream = require('deepstream.io-client-js');
+// const deepstream = require('deepstream.io-client-js');
 const createNewWallet = require('../src/wallets/createNew');
 
 describe('Create new wallets', () => {
-  const connection = deepstream('localhost:6020').login();
+  // const connection = deepstream('localhost:6020').login();
 
   beforeEach(() => {
     createNewWallet();
@@ -28,10 +28,10 @@ describe('Create new wallets', () => {
   });
 
   afterEach(() => {
-    connection.off();
+    // connection.off();
   });
 
   after(() => {
-    connection.close();
+    // connection.close();
   });
 });
