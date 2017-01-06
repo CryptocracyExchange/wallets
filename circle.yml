@@ -1,9 +1,12 @@
 machine:
+  node:
+    version: 0.10.22
   services:
     - docker
 
 dependencies:
   override:
+    - [ "type -p eslint" == "eslint not found" ] && npm install -g eslint
     - npm install --dev
 
 deployment:
