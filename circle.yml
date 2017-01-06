@@ -6,8 +6,14 @@ machine:
 
 dependencies:
   override:
-    - [ "type -p eslint" == "eslint not found" ] && npm install -g eslint
+    # - [ "type -p eslint" == "eslint not found" ] && npm install -g eslint
     - npm install --dev
+
+test:
+  override:
+    - mocha test --reporter mocha-junit-reporter:
+        environment:
+          MOCHA_FILE: $CIRCLE_TEST_REPORTS/junit/test-results.xml
 
 deployment:
   hub:
