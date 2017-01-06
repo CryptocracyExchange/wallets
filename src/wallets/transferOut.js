@@ -38,6 +38,7 @@ module.exports = () => {
     //     }
     //   }
     // });
-    // config.connection.event.emit('checkBalance', { userID: data.userID, currency: data.currency });
+    // config.connection.event.emit('checkBalance',
+    // { userID: data.userID, currency: data.currency });
   });
 };

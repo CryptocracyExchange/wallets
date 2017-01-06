@@ -20,8 +20,10 @@ app.post('/apihooks/*', (req, res) => {
   res.sendStatus(200);
 });
 
-app.listen(88, () => {
-  console.log('API webhook listener listening on port 88!');
+const port = process.env.NODE_ENV === 'prod' ? 8888 : 3000;
+
+app.listen(port, () => {
+  console.log(`API webhook listener listening on port ${port}!`);
 });
 
 generateWalletListener();

@@ -4,10 +4,11 @@
   "description": "",
   "main": "./src",
   "scripts": {
-    "start": "nodemon ./src/index.js",
+    "start-dev": "nodemon ./src/index.js",
+    "start-prod": "NODE_ENV=prod node ./src/index.js",
     "lint": "eslint ./src/ ./public/scripts/",
     "mocha": "mocha ./test --recursive",
-    "test": "npm run lint && npm run mocha",
+    "test": "npm run mocha",
     "db-start": "mongod --dbpath ./data --syslog --fork",
     "db-stop": "kill -9 mongod"
   },
@@ -23,12 +24,12 @@
   "homepage": "https://github.com/CryptocracyExchange/wallets#readme",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.12.2",
+    "eslint": "^3.13.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-mocha": "^4.8.0",
     "eslint-plugin-react": "^6.8.0",
+    "eslint-plugin-mocha": "^4.8.0",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0"
   },

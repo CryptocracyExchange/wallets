@@ -6,3 +6,4 @@ Wallets TODO
 - Create new tests
 - Finish transfer out
 - Transfer out tests
+- istanbul code coverage reports

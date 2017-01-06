@@ -1,12 +1,12 @@
 const expect = require('chai').expect;
 // const deepstream = require('deepstream.io-client-js');
-const createNewWallet = require('../src/wallets/createNew');
+// const createNewWallet = require('../src/wallets/createNew');
 
 describe('Create new wallets', () => {
   // const connection = deepstream('localhost:6020').login();
 
   beforeEach(() => {
-    createNewWallet();
+    // createNewWallet();
   });
 
   it('Should listen for "wallet-create" events', () => {
