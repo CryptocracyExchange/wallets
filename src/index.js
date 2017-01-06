@@ -9,7 +9,6 @@ const transferWalletListener = require('./wallets/transferOut');
 const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use('/', express.static(path.join(__dirname, '../public')));
 
 app.post('/apihooks/*', (req, res) => {
   // Emit event with the unique code.
@@ -18,11 +17,11 @@ app.post('/apihooks/*', (req, res) => {
     uniqueID,
     data: req.body,
   });
-  res.send(200);
+  res.sendStatus(200);
 });
 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+app.listen(88, () => {
+  console.log('API webhook listener listening on port 88!');
 });
 
 generateWalletListener();
