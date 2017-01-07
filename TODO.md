@@ -7,3 +7,10 @@ Wallets TODO
 - Finish transfer out
 - Transfer out tests
 - istanbul code coverage reports
+
+
+DEEPSTREAM_AUTH_PASSWORD
+DEEPSTREAM_BCYPHERAPIKEY
+DOCKER_EMAIL
+DOCKER_PASS
+DOCKER_USER

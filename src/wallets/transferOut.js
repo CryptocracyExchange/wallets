@@ -1,8 +1,8 @@
 const config = require('./config/');
 const hotWalletAddress = require('./hotWallets');
 
-const createTransfer = (userID, currency, amount, outputAddress) => {
-  config.connection.event.subscribe(`hotWalletAddress-${currency}`, (wallet) => {
+const createTransfer = (userID, currency, amount, outputAddress, connection) => {
+  connection.event.subscribe(`hotWalletAddress-${currency}`, (wallet) => {
     const data = {
       inputs: [{ addresses: [wallet.address] }],
       outputs: [{ addresses: [outputAddress], value: parseFloat(amount) }],
@@ -17,28 +17,28 @@ const createTransfer = (userID, currency, amount, outputAddress) => {
     if (currency === 'BTC') { config.btcapi.newTX(data, cb); }
     if (currency === 'LTC') { config.ltcapi.newTX(data, cb); }
     if (currency === 'DOGE') { config.dogeapi.newTX(data, cb); }
-    config.connection.event.unsubscribe(`hotWalletAddress-${currency}`);
+    connection.event.unsubscribe(`hotWalletAddress-${currency}`);
   });
-  hotWalletAddress(currency);
+  hotWalletAddress(currency, connection);
 };
 
-module.exports = () => {
-  config.connection.event.subscribe('wallet-transfer-out', (data) => {
+module.exports = (connection) => {
+  connection.event.subscribe('wallet-transfer-out', (data) => {
     // Check balance
-    // config.connection.event.subscribe('returnBalance', (returnData) => {
+    // connection.event.subscribe('returnBalance', (returnData) => {
     //   if (data.userID === returnData.userID &&
     //       data.currency === returnData.currency &&
     //       returnData.currency > data.amount) {
     //     // Unsubscribe from the balance check if data matches
-    //     config.connection.event.unsubscribe('returnBalance');
+    //     connection.event.unsubscribe('returnBalance');
     //     if (returnData.amount >= data.amount) {
-    createTransfer(data.userID, data.currency, data.amount, data.address);
+    createTransfer(data.userID, data.currency, data.amount, data.address, connection);
     //     } else {
     //       // Insufficient balance error to user...
     //     }
     //   }
     // });
-    // config.connection.event.emit('checkBalance',
+    // connection.event.emit('checkBalance',
     // { userID: data.userID, currency: data.currency });
   });
 };

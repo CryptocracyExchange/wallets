@@ -33,12 +33,12 @@ const config = require('./config/');
 //   });
 // };
 
-module.exports = () => {
+module.exports = (connection) => {
   const walletRecordCreator = (userID, type, walletData) => {
-    const userWallet = config.connection.record.getRecord(`wallets/${userID}`);
+    const userWallet = connection.record.getRecord(`wallets/${userID}`);
     userWallet.whenReady((wallet) => {
       // Update wallet information.
-      const urlID = config.connection.getUid();
+      const urlID = connection.getUid();
       wallet.set(`${type}.privateKey`, walletData.private);
       wallet.set(`${type}.publicKey`, walletData.public);
       wallet.set(`${type}.address`, walletData.address);
@@ -95,15 +95,15 @@ module.exports = () => {
         });
       }
       // Listen for a single confirmed transaction with a unique ID.
-      config.connection.once(`confirmed-transfer-${urlID}`, (data) => {
-        config.connection.event.emit('updateBalance', { userID, currency: type, update: data });
+      connection.once(`confirmed-transfer-${urlID}`, (data) => {
+        connection.event.emit('updateBalance', { userID, currency: type, update: data });
         // [TODO]: Save transaction to new record set
         // [TODO]: Transfer to hot wallet
       });
     });
   };
 
-  config.connection.event.subscribe('wallet-create', (data) => {
+  connection.event.subscribe('wallet-create', (data) => {
     const createWalletCB = (err, walletInfo) => {
       if (err) {
         console.log(err);

@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const deepstream = require('deepstream.io-client-js');
 const config = require('./wallets/config/');
 const generateWalletListener = require('./wallets/createNew');
 const transferWalletListener = require('./wallets/transferOut');
@@ -26,5 +27,12 @@ app.listen(port, () => {
   console.log(`API webhook listener listening on port ${port}!`);
 });
 
-generateWalletListener();
-transferWalletListener();
+const deepstreamServer = process.env.NODE_ENV === 'prod' ? 'deepstream' : 'localhost';
+const auth = process.env.NODE_ENV === 'prod' ? {
+  role: process.env.DEEPSTREAM_AUTH_ROLE,
+  username: process.env.DEEPSTREAM_AUTH_USERNAME,
+  password: process.env.DEEPSTREAM_AUTH_PASSWORD } : {};
+const connection = deepstream(`${deepstreamServer}:6020`).login(auth);
+
+generateWalletListener(connection);
+transferWalletListener(connection);

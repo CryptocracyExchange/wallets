@@ -4,7 +4,7 @@
   "description": "",
   "main": "./src",
   "scripts": {
-    "start-dev": "nodemon ./src/index.js",
+    "start-dev": "NODE_ENV=dev nodemon ./src/index.js",
     "start-prod": "NODE_ENV=prod node ./src/index.js",
     "lint": "eslint ./src/ ./public/scripts/",
     "mocha": "mocha ./test --recursive",

@@ -1,15 +1,15 @@
 const config = require('./config/');
 
-const generateHotWallets = (currency) => {
+const generateHotWallets = (currency, connection) => {
   const createWalletCB = (err, walletData) => {
     if (err) { console.log(err); } else {
-      const hotWallet = config.connection.record.getRecord(`hotwallets/${currency}`);
+      const hotWallet = connection.record.getRecord(`hotwallets/${currency}`);
       hotWallet.whenReady((wallet) => {
         wallet.set('privateKey', walletData.private);
         wallet.set('publicKey', walletData.public);
         wallet.set('address', walletData.address);
         wallet.set('wif', walletData.wif);
-        config.connection.event.emit(`hotWalletAddress-${currency}`, { address: walletData.address });
+        connection.event.emit(`hotWalletAddress-${currency}`, { address: walletData.address });
       });
     }
   };
@@ -25,12 +25,12 @@ const generateHotWallets = (currency) => {
   }
 };
 
-module.exports = (currency) => {
-  config.connection.record.snapshot(`hotwallets/${currency}`, (err, wallet) => {
+module.exports = (currency, connection) => {
+  connection.record.snapshot(`hotwallets/${currency}`, (err, wallet) => {
     if (err === 'RECORD_NOT_FOUND') {
-      generateHotWallets(currency);
+      generateHotWallets(currency, connection);
     } else if (!err) {
-      config.connection.event.emit(`hotWalletAddress-${currency}`, { address: wallet.address });
+      connection.event.emit(`hotWalletAddress-${currency}`, { address: wallet.address });
     } else {
       console.log(err);
     }
