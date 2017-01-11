@@ -21,7 +21,7 @@ app.post('/apihooks/*', (req, res) => {
   res.sendStatus(200);
 });
 
-const port = process.env.NODE_ENV === 'prod' ? 8888 : 3000;
+const port = process.env.NODE_ENV === 'prod' ? 8888 : 3100;
 
 app.listen(port, () => {
   console.log(`API webhook listener listening on port ${port}!`);
