@@ -44,6 +44,7 @@ module.exports = (connection) => {
       wallet.set(`${type}.address`, walletData.address);
       wallet.set(`${type}.wif`, walletData.wif);
       wallet.set(`${type}.uniqueID`, urlID);
+      console.log(`Set ${type} address (${walletData.address}) for ${userID}.`);
 
       const webhook = {
         event: 'confirmed-tx',
@@ -112,6 +113,7 @@ module.exports = (connection) => {
       }
     };
 
+    console.log(`Generating ${data.currency} address for ${data.userID}.`);
     if (data.currency === 'BTC') {
       config.btcapi.genAddr(null, createWalletCB);
     }
