@@ -24,13 +24,17 @@
   "homepage": "https://github.com/CryptocracyExchange/wallets#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "deepstream.io": "^2.1.2",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-mocha": "^4.8.0",
     "eslint-plugin-react": "^6.8.0",
     "mocha": "^3.2.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "request": "^2.79.0",
+    "request-mocha": "^0.2.0",
+    "sinon": "^1.17.7"
   },
   "dependencies": {
     "blockcypher": "^0.2.0",
