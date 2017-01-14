@@ -1,11 +1,6 @@
 const request = require('request');
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const deepstreamClient = require('deepstream.io-client-js');
-const listeners = require('../src/wallets/listeners');
-// const createHelpers = require('../src/wallets/createHelpers');
-
-const client = deepstreamClient('localhost:6030');
 
 describe('Wallets Service', function() {
   // beforeEach(function(done) {
@@ -18,8 +13,7 @@ describe('Wallets Service', function() {
 
   describe('Create listeners', function() {
     it('Should create listener for "wallet-create" events', function() {
-      listeners.createListener(client);
-      
+
     });
 
     // it('Should create listener for "wallet-transfer-out" events', function(done) {
@@ -30,7 +24,7 @@ describe('Wallets Service', function() {
     //     done();
     //   }, 100);
     // });
-});
+  });
 
 
   // afterEach(function() {
@@ -65,4 +59,4 @@ describe('Wallets Service', function() {
   //       });
   //     }, 100);
   //   });
-  // });
+});
